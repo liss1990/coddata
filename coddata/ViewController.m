@@ -9,9 +9,13 @@
 #import "ViewController.h"
 #import <CoreData/CoreData.h>
 #import "User.h"
-@interface ViewController ()
+#import "UserTableViewCell.h"
+#import "EditViewController.h"
+@interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)NSManagedObjectContext *objectContext;
-
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *Addbtn;
+@property (weak, nonatomic) IBOutlet UITableView *tableVeiw;
+@property(nonatomic,strong)NSMutableArray *dataarray;
 @end
 
 @implementation ViewController
@@ -19,6 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     //初始化上下文
+    self.dataarray=[NSMutableArray array];
     self.objectContext = [[NSManagedObjectContext alloc]initWithConcurrencyType:NSPrivateQueueConcurrencyType];
     
     //初始化model
@@ -31,56 +36,77 @@
     NSString *sqlitePath = [path stringByAppendingString:@"user.sqlite"];
     [coordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:[NSURL fileURLWithPath:sqlitePath] options:nil error:nil];
     self.objectContext.persistentStoreCoordinator=coordinator;
-    
+    [self.tableVeiw registerNib:[UINib nibWithNibName:@"UserTableViewCell" bundle:nil] forCellReuseIdentifier:@"UserTableViewCell"];
 }
-- (IBAction)add:(id)sender {
-    User *user = [NSEntityDescription insertNewObjectForEntityForName:@"User" inManagedObjectContext:self.objectContext];
-    user.name=@"李思";
-    user.age = @82;
-    user.tell=@"66666666666";
-    [self.objectContext save:nil];
-    
-    
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.dataarray.count;
+
 }
-- (IBAction)deleted:(id)sender {
-    NSFetchRequest *reques = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    reques.predicate  = [NSPredicate predicateWithFormat:@"name = %@",@"李思思"];
-    NSArray *array = [self.objectContext executeFetchRequest:reques error:nil];
-    
-    for (User *u in array) {
-        [self.objectContext deleteObject:u];
-    }
-    [self.objectContext save:nil ];
-    
-    
-    
-}
-- (IBAction)update:(id)sender {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    request.predicate = [NSPredicate predicateWithFormat:@"age = %@",@"82"];
-    NSArray *array = [self.objectContext executeFetchRequest:request error:nil];
-    for (User *u in array) {
-        u.name = @"你好";
-        u.age = @23;
-        u.tell =@"8888888";
-    }
-    if ([self.objectContext save:nil ]) {
-        NSLog(@"修改成功");
-    } 
-    
-}
-- (IBAction)select:(id)sender {
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
-    request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"age" ascending:NO]];
-    
-    NSArray *array = [self.objectContext executeFetchRequest:request error:nil];
-    for (User *u in array) {
-        NSLog( @"姓名%@   年龄%@  电话%@",u.name,u.age,u.tell);
-    }
-    
+
+-(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UserTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"UserTableViewCell" forIndexPath:indexPath];
+    User *user=self.dataarray[indexPath.row];
+    cell.userName.text=user.name;
+    cell.age.text=[NSString stringWithFormat:@"%@", user.age];
+    return cell;
     
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    EditViewController *vc=[[EditViewController alloc]init];
+    User *use=self.dataarray[indexPath.row];
+    vc.user=use; 
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle==UITableViewCellEditingStyleDelete) {
+        NSLog(@"%ld",indexPath.row);
+        User *user=self.dataarray[indexPath.row];
+        NSFetchRequest *reques = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+        reques.predicate  = [NSPredicate predicateWithFormat:@"name = %@",user.name];
+        NSArray *array = [self.objectContext executeFetchRequest:reques error:nil];
+        for (User *u in array) {
+            [self.objectContext deleteObject:u];
+            [self.dataarray removeObjectAtIndex:indexPath.row];
+        }
+        [self.objectContext save:nil ];
+        [self.tableVeiw reloadData];
+    }
+
+}
+
+
+- (IBAction)add:(id)sender {
+    EditViewController *vc=[[EditViewController alloc]init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+ 
+
+-(void)selectdata
+{
+    [self.dataarray removeAllObjects];
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"age" ascending:NO];
+    request.sortDescriptors = [NSArray arrayWithObject:sort];
+    NSArray *array = [self.objectContext executeFetchRequest:request error:nil];
+    
+    for (User *u in array) {
+        [self.dataarray addObject:u];
+    }
+    [self.tableVeiw reloadData];
+
+
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self selectdata];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

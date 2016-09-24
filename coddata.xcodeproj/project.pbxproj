@@ -10,6 +10,9 @@
 		770B30241D05BDDB00812932 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 770B30221D05BDDB00812932 /* Model.xcdatamodeld */; };
 		770B30291D05BE0400812932 /* User+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 770B30261D05BE0400812932 /* User+CoreDataProperties.m */; };
 		770B302A1D05BE0400812932 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 770B30281D05BE0400812932 /* User.m */; };
+		7713EE171D9606AB008FDB8A /* UserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7713EE151D9606AB008FDB8A /* UserTableViewCell.m */; };
+		7713EE181D9606AB008FDB8A /* UserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7713EE161D9606AB008FDB8A /* UserTableViewCell.xib */; };
+		7713EE1B1D96085F008FDB8A /* EditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7713EE1A1D96085F008FDB8A /* EditViewController.m */; };
 		77CFEA541D04695400957F64 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CFEA531D04695400957F64 /* main.m */; };
 		77CFEA571D04695400957F64 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CFEA561D04695400957F64 /* AppDelegate.m */; };
 		77CFEA5A1D04695400957F64 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77CFEA591D04695400957F64 /* ViewController.m */; };
@@ -24,6 +27,11 @@
 		770B30261D05BE0400812932 /* User+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "User+CoreDataProperties.m"; sourceTree = "<group>"; };
 		770B30271D05BE0400812932 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		770B30281D05BE0400812932 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		7713EE141D9606AB008FDB8A /* UserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserTableViewCell.h; sourceTree = "<group>"; };
+		7713EE151D9606AB008FDB8A /* UserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTableViewCell.m; sourceTree = "<group>"; };
+		7713EE161D9606AB008FDB8A /* UserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UserTableViewCell.xib; sourceTree = "<group>"; };
+		7713EE191D96085F008FDB8A /* EditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditViewController.h; sourceTree = "<group>"; };
+		7713EE1A1D96085F008FDB8A /* EditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditViewController.m; sourceTree = "<group>"; };
 		77CFEA4F1D04695400957F64 /* coddata.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = coddata.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77CFEA531D04695400957F64 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		77CFEA551D04695400957F64 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -66,6 +74,11 @@
 		77CFEA511D04695400957F64 /* coddata */ = {
 			isa = PBXGroup;
 			children = (
+				7713EE141D9606AB008FDB8A /* UserTableViewCell.h */,
+				7713EE151D9606AB008FDB8A /* UserTableViewCell.m */,
+				7713EE161D9606AB008FDB8A /* UserTableViewCell.xib */,
+				7713EE191D96085F008FDB8A /* EditViewController.h */,
+				7713EE1A1D96085F008FDB8A /* EditViewController.m */,
 				77CFEA551D04695400957F64 /* AppDelegate.h */,
 				77CFEA561D04695400957F64 /* AppDelegate.m */,
 				77CFEA581D04695400957F64 /* ViewController.h */,
@@ -149,6 +162,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7713EE181D9606AB008FDB8A /* UserTableViewCell.xib in Resources */,
 				77CFEA621D04695500957F64 /* LaunchScreen.storyboard in Resources */,
 				77CFEA5F1D04695500957F64 /* Assets.xcassets in Resources */,
 				77CFEA5D1D04695400957F64 /* Main.storyboard in Resources */,
@@ -162,9 +176,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7713EE171D9606AB008FDB8A /* UserTableViewCell.m in Sources */,
 				770B30291D05BE0400812932 /* User+CoreDataProperties.m in Sources */,
 				77CFEA5A1D04695400957F64 /* ViewController.m in Sources */,
 				770B302A1D05BE0400812932 /* User.m in Sources */,
+				7713EE1B1D96085F008FDB8A /* EditViewController.m in Sources */,
 				77CFEA571D04695400957F64 /* AppDelegate.m in Sources */,
 				77CFEA541D04695400957F64 /* main.m in Sources */,
 				770B30241D05BDDB00812932 /* Model.xcdatamodeld in Sources */,
